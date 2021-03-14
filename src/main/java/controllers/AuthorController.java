@@ -20,8 +20,26 @@ public class AuthorController {
     private IAuthorService authorService;
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getAllAuthors() {
-        return Response.ok("Nothing").build();
+        List<Author> authors;
+        try {
+            authors = authorService.getAllAuthors();
+        } catch (ServerErrorException ex) {
+            return Response
+                    .status(500).entity(ex.getMessage()).build();
+        }
+
+        if (authors == null) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity("No authors was found")
+                    .build();
+        }
+
+        return Response
+                .ok(authors)
+                .build();
     }
 
 
@@ -74,17 +92,17 @@ public class AuthorController {
     }
 
     @GET
-    @Path("/books")
-    public Response getAuthorBook() {
-        List<Author> authors;
+    @Path("/books/{name}")
+    public Response getAuthorBook(@PathParam("name") String name) {
+        List<Book> books;
         try {
-            authors = authorService.getAuthorBook();
+            books = authorService.getAuthorBook(name);
         } catch (ServerErrorException ex) {
             return Response
                     .status(500).entity(ex.getMessage()).build();
         }
 
-        if (authors == null) {
+        if (books == null) {
             return Response
                     .status(Response.Status.NOT_FOUND)
                     .entity("Book does not exist!")
@@ -93,7 +111,7 @@ public class AuthorController {
 
         return Response
                 .status(Response.Status.OK)
-                .entity(authors)
+                .entity(books)
                 .build();
     }
 }

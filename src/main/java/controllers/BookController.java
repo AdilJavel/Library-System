@@ -19,6 +19,31 @@ public class BookController {
     private IBookService bookService;
 
     @GET
+    @Path("/remove/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeBookByID(@PathParam("id") int id) {
+        boolean deleted;
+        try {
+            deleted = bookService.removeBookById(id);
+        } catch (ServerErrorException ex) {
+            return Response
+                    .status(500).entity(ex.getMessage()).build();
+        }
+
+        if (deleted == false) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity("Book does not exist")
+                    .build();
+        }
+
+        return Response
+                .status(Response.Status.OK)
+                .entity(deleted ? "Book was Removed" : "Book deletion been failed.")
+                .build();
+    }
+
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllBooks() {
         List<Book> books;

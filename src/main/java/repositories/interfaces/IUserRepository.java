@@ -1,15 +1,16 @@
 package repositories.interfaces;
 
-import libs.LoginLib;
+import entities.Book;
 import entities.User;
 
 import java.util.List;
 
-public interface IUserRepository{
 
-    User getUserByLogin(String username, String password);
-    User getUserByUsername(String issuer);
+public interface IUserRepository {
+    User getUserById(int id);
     boolean create(User user);
+    User getUserByIdWithBooks(int id);
     List<User> getAllUsers();
-    boolean delete(int id);
+    List<User> getUsersWithSame(int id);
+    boolean removeUserById(int id);
 }

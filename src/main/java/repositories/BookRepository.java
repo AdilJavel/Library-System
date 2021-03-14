@@ -139,6 +139,30 @@ public class BookRepository implements IBookRepository {
     }
 
     @Override
+    public boolean removeBookById(int id) {
+        Connection con = null;
+        try {
+            con = db.getConnection();
+            String sql = "DELETE FROM books WHERE id=?";
+            PreparedStatement st = con.prepareStatement(sql);
+
+            st.setInt(1, id);
+
+            if(st.execute())
+                return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    @Override
     public List<Book> getAllBooksByGender(int gender) {
         String gendera;
         if (gender==1) {

@@ -13,6 +13,12 @@ public class AuthorService implements IAuthorService {
     private IAuthorRepository authorRepository;
 
     @Override
+    public List<Author> getAllAuthors() {
+        List<Author> authors = authorRepository.getAllAuthors();
+        return authors;
+    }
+
+    @Override
     public boolean create(Author author) {
         return authorRepository.create(author);
     }
@@ -23,8 +29,8 @@ public class AuthorService implements IAuthorService {
     }
 
     @Override
-    public List<Author> getAuthorBook() {
-        List<Author> authors = authorRepository.getAuthorBook();
-        return authors;
+    public List<Book> getAuthorBook(String name) {
+        List<Book> books = authorRepository.getAuthorBook(name);
+        return books;
     }
 }

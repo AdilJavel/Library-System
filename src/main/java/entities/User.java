@@ -4,24 +4,37 @@ public class User {
     private int id;
     private String name;
     private String surname;
-    private String username;
-    private String password;
+    private int favBook1;
+    private int favBook2;
+    private int favBook3;
 
     public User() {
 
     }
 
-    public User(String name, String surname, String username, String password) {
+    public User(int id, String name, String surname) {
+        setId(id);
         setName(name);
         setSurname(surname);
-        setUsername(username);
-        setPassword(password);
+    }
+    public User(int id, String name, String gender, int favbook1, int favBook2, int favBook3) {
+        this(id, name, gender);
+        setFavBook1(favbook1);
+        setFavBook2(favBook2);
+        setFavBook3(favBook3);
     }
 
-    public User(int id, String name, String surname, String username, String password) {
-        this(name, surname, username, password);
-        setId(id);
-    }
+    public void setFavBook1(int favBook1) { this.favBook1 = favBook1; }
+
+    public int getFavBook1() { return favBook1; }
+
+    public void setFavBook2(int favBook2) { this.favBook2 = favBook2; }
+
+    public int getFavBook2() { return favBook2; }
+
+    public void setFavBook3(int favBook3) {this.favBook3 = favBook3;}
+
+    public int getFavBook3() {return favBook3; }
 
     public int getId() {
         return id;
@@ -47,28 +60,21 @@ public class User {
         this.surname = surname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPassword() {
-        return password;
+    public String withFavs() {
+        return "Author{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + name + '\'' +
+                ", favourite books id=" + favBook1 + " " + favBook2 + " " + favBook3 +
+                '}';
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Author " +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                '}';
+                '\n';
     }
 }

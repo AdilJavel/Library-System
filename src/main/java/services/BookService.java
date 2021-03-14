@@ -22,6 +22,11 @@ public class BookService implements IBookService {
         return books;
     }
     @Override
+    public boolean removeBookById(int id) {
+        boolean deleted = bookRepository.removeBookById(id);
+        return deleted;
+    }
+    @Override
     public List<Book> getAllBooksByGender(int gender) {
         List<Book> books = bookRepository.getAllBooksByGender(gender);
         return books;

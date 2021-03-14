@@ -15,4 +15,5 @@ public interface IBookRepository {
     List<Book> getBookByJenre(String jenre);
     List<Book> getBookByPrice(int price);
     List<Book> getBookByPublisher(String publisher);
+    boolean removeBookById(int id);
 }

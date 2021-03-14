@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("publishers")
 public class PublisherController {
@@ -15,10 +16,27 @@ public class PublisherController {
     private IPublisherService publisherService;
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getAllPublishers() {
-        return Response.ok("Nothing").build();
-    }
+        List<Publisher> publishers;
+        try {
+            publishers = publisherService.getAllPublishers();
+        } catch (ServerErrorException ex) {
+            return Response
+                    .status(500).entity(ex.getMessage()).build();
+        }
 
+        if (publishers == null) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity("No publishers was found")
+                    .build();
+        }
+
+        return Response
+                .ok(publishers)
+                .build();
+    }
 
     @GET
     @Path("/{id}")
